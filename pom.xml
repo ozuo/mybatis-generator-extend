@@ -102,17 +102,4 @@
             </plugin>
         </plugins>
     </build>
-    <!-- 用于本地私服部署 需要注释上面的github部署 -->
-    <!--    <distributionManagement>-->
-    <!--        <repository>-->
-    <!--            <id>kyh-nexus-releases</id>-->
-    <!--            <name>KYH Release</name>-->
-    <!--            <url>http://10.161.16.174:8081/repository/maven-releases/</url>-->
-    <!--        </repository>-->
-    <!--        <snapshotRepository>-->
-    <!--            <id>kyh-nexus-snapshots</id>-->
-    <!--            <name>KYH Snapshots</name>-->
-    <!--            <url>http://10.161.16.174:8081/repository/maven-snapshots/</url>-->
-    <!--        </snapshotRepository>-->
-    <!--    </distributionManagement>-->
 </project>

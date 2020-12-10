@@ -89,7 +89,7 @@
     mybatis.generator.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
     mybatis.mapper-locations = classpath:/mappers/*.xml
     mybatis.type-aliases-package = com.wandaloans.common.mapper
-    classpath=/Users/zuoyx/.m2/repository/com/oracle/ojdbc/ojdbc8/19.3.0.0/ojdbc8-19.3.0.0.jar
+    classpath=/Users/xxxx/.m2/repository/com/oracle/ojdbc/ojdbc8/19.3.0.0/ojdbc8-19.3.0.0.jar
     ```
     
     3. generatorConfig.xml
@@ -184,4 +184,7 @@
         </context>
     </generatorConfiguration>
     ```
+    
+    4. mvn clean site deploy
+    
     
