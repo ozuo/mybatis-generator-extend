@@ -119,7 +119,7 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
                     if (introspectedColumn.getScale() > 0) {//如果包含小数点则转换成BigDecimal
                         answer = new FullyQualifiedJavaType(BigDecimal.class.getName());
                     } else {
-                        answer = new FullyQualifiedJavaType(Integer.class.getName());
+                        answer = new FullyQualifiedJavaType(Long.class.getName());
                     }
                     break;
                 case Types.NUMERIC:
