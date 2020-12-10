@@ -1,2 +1,2 @@
 # mbg-plugins
-mybatis generator plugins, such as lombok
+mybatis generator plugins extend, such as lombok, swagger2, ...
