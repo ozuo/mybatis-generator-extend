@@ -33,6 +33,7 @@ public class MybatisLombokPlugin extends PluginAdapter {
         if (useSwagger2Flag == null || useSwagger2Flag.trim().isEmpty()) {
             useSwagger2Flag = "false";
         }
+        System.out.println("useSwagger2Flag = " + useSwagger2Flag);
         return true;
     }
 
@@ -49,14 +50,14 @@ public class MybatisLombokPlugin extends PluginAdapter {
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         // 清除已有注释
         topLevelClass.getJavaDocLines().clear();
-
         topLevelClass.addImportedType("lombok.Data");
         topLevelClass.addImportedType("java.io.Serializable");
         topLevelClass.addAnnotation("@Data");
         if (StringUtility.isTrue(useSwagger2Flag)) {
             topLevelClass.addImportedType("io.swagger.annotations.ApiModel");
             topLevelClass.addImportedType("io.swagger.annotations.ApiModelProperty");
-            topLevelClass.addAnnotation("@ApiModel(description = " + introspectedTable.getRemarks() + ")");
+            String sa = "@ApiModel(description = \"" + introspectedTable.getRemarks() + "\")";
+            topLevelClass.addAnnotation(sa);
         }
 
         // 添加类注释
@@ -96,10 +97,12 @@ public class MybatisLombokPlugin extends PluginAdapter {
             }
 
         }
-        field.addJavaDocLine(" * 默认值" + introspectedColumn.getDefaultValue());
+        boolean notNull = !introspectedColumn.isNullable();
+        field.addJavaDocLine(" * 默认值: " + introspectedColumn.getDefaultValue() + ", 非空: " + notNull);
         field.addJavaDocLine(" */");
         if (StringUtility.isTrue(useSwagger2Flag)) {
-            field.addAnnotation("@ApiModelProperty(value = " + remarks + ", required = " + !introspectedColumn.isNullable() + ")");
+            String sa = "@ApiModelProperty(value = \"" + remarks + "\", required = " + notNull + ")";
+            field.addAnnotation(sa);
         }
         return true;
     }

@@ -54,6 +54,7 @@
                 </executions>
             </plugin>
 
+            <!-- 发布到github仓库 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
@@ -65,13 +66,11 @@
                     </altDeploymentRepository>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.8.2</version>
             </plugin>
-            <!-- 发布到github仓库 -->
             <plugin>
                 <groupId>com.github.github</groupId>
                 <artifactId>site-maven-plugin</artifactId>
@@ -103,5 +102,17 @@
             </plugin>
         </plugins>
     </build>
-
+    <!-- 用于本地私服部署 需要注释上面的github部署 -->
+    <!--    <distributionManagement>-->
+    <!--        <repository>-->
+    <!--            <id>kyh-nexus-releases</id>-->
+    <!--            <name>KYH Release</name>-->
+    <!--            <url>http://10.161.16.174:8081/repository/maven-releases/</url>-->
+    <!--        </repository>-->
+    <!--        <snapshotRepository>-->
+    <!--            <id>kyh-nexus-snapshots</id>-->
+    <!--            <name>KYH Snapshots</name>-->
+    <!--            <url>http://10.161.16.174:8081/repository/maven-snapshots/</url>-->
+    <!--        </snapshotRepository>-->
+    <!--    </distributionManagement>-->
 </project>
