@@ -1,5 +1,4 @@
-// package位置固定 不能修改
-package org.mybatis.generator.plugins;
+package com.github.zyx.mbg.extend.plugins;
 
 
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -23,8 +22,17 @@ public class MybatisLombokPlugin extends PluginAdapter {
     public MybatisLombokPlugin() {
     }
 
+    /**
+     * 是否使用Swagger2注解 默认false
+     */
+    private String useSwagger2Flag;
+
     @Override
     public boolean validate(List<String> list) {
+        useSwagger2Flag = properties.getProperty("useSwagger2Flag");
+        if (useSwagger2Flag == null || useSwagger2Flag.trim().isEmpty()) {
+            useSwagger2Flag = "false";
+        }
         return true;
     }
 
@@ -39,15 +47,21 @@ public class MybatisLombokPlugin extends PluginAdapter {
      */
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        // 清除已有注释
         topLevelClass.getJavaDocLines().clear();
 
         topLevelClass.addImportedType("lombok.Data");
         topLevelClass.addImportedType("java.io.Serializable");
         topLevelClass.addAnnotation("@Data");
+        if (StringUtility.isTrue(useSwagger2Flag)) {
+            topLevelClass.addImportedType("io.swagger.annotations.ApiModel");
+            topLevelClass.addImportedType("io.swagger.annotations.ApiModelProperty");
+            topLevelClass.addAnnotation("@ApiModel(description = " + introspectedTable.getRemarks() + ")");
+        }
 
         // 添加类注释
         topLevelClass.addJavaDocLine("/**");
-        topLevelClass.addJavaDocLine(" * " + introspectedTable.getRemarks() + "（" + introspectedTable.getFullyQualifiedTable() + "）\r\n");
+        topLevelClass.addJavaDocLine(" * " + introspectedTable.getRemarks() + "（" + introspectedTable.getFullyQualifiedTable() + "）");
         topLevelClass.addJavaDocLine(" *");
         topLevelClass.addJavaDocLine(" * @author " + System.getProperties().getProperty("user.name"));
         topLevelClass.addJavaDocLine(" * @date " + (new SimpleDateFormat("yyyy/MM/dd hh:mm")).format(new Date()));
@@ -69,15 +83,23 @@ public class MybatisLombokPlugin extends PluginAdapter {
     @Override
     public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
                                        IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        // 清除已有注释
         field.getJavaDocLines().clear();
+
         String remarks = introspectedColumn.getRemarks();
+        field.addJavaDocLine("/**");
         if (StringUtility.stringHasValue(remarks)) {
-            field.addJavaDocLine("/**");
+
             String[] remarkLines = remarks.split(System.getProperty("line.separator"));
             for (String remarkLine : remarkLines) {
                 field.addJavaDocLine(" * " + remarkLine);
             }
-            field.addJavaDocLine(" */");
+
+        }
+        field.addJavaDocLine(" * 默认值" + introspectedColumn.getDefaultValue());
+        field.addJavaDocLine(" */");
+        if (StringUtility.isTrue(useSwagger2Flag)) {
+            field.addAnnotation("@ApiModelProperty(value = " + remarks + ", required = " + !introspectedColumn.isNullable() + ")");
         }
         return true;
     }
@@ -92,14 +114,12 @@ public class MybatisLombokPlugin extends PluginAdapter {
      */
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        // 清除已有注释
         interfaze.getJavaDocLines().clear();
-        // 添加Mapper的import
-//        interfaze.addImportedType(new FullyQualifiedJavaType("tk.mybatis.mapper.common.Mapper"));
-        // 添加Mapper的注解
-//        interfaze.addAnnotation("@Mapper");
+
         // 添加类注释
         interfaze.addJavaDocLine("/**");
-        interfaze.addJavaDocLine(" * " + introspectedTable.getRemarks() + "（" + introspectedTable.getFullyQualifiedTable() + "）\r\n");
+        interfaze.addJavaDocLine(" * " + introspectedTable.getRemarks() + "（" + introspectedTable.getFullyQualifiedTable() + "）");
         interfaze.addJavaDocLine(" *");
         interfaze.addJavaDocLine(" * @author " + System.getProperties().getProperty("user.name"));
         interfaze.addJavaDocLine(" * @date " + (new SimpleDateFormat("yyyy/MM/dd hh:mm")).format(new Date()));
