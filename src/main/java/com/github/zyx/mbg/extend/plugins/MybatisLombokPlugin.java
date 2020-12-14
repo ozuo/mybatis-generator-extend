@@ -59,6 +59,15 @@ public class MybatisLombokPlugin extends PluginAdapter {
             String sa = "@ApiModel(description = \"" + introspectedTable.getRemarks() + "\")";
             topLevelClass.addAnnotation(sa);
         }
+        // 添加序列化id private static final long serialVersionUID = 1L;
+        Field field = new Field();
+        field.setName("serialVersionUID");
+        field.setType(new FullyQualifiedJavaType("long"));
+        field.setInitializationString("1L");
+        field.setVisibility(JavaVisibility.PRIVATE);
+        field.setFinal(true);
+        field.setStatic(true);
+        topLevelClass.addField(field);
 
         // 添加类注释
         topLevelClass.addJavaDocLine("/**");
@@ -97,11 +106,16 @@ public class MybatisLombokPlugin extends PluginAdapter {
             }
 
         }
-        boolean notNull = !introspectedColumn.isNullable();
-        field.addJavaDocLine(" * 默认值: " + introspectedColumn.getDefaultValue() + ", 非空: " + notNull);
+        boolean cannotNull = !introspectedColumn.isNullable();
+        String defaultValue = introspectedColumn.getDefaultValue();
+        String defaultVal = "默认值: " + defaultValue + ", ";
+        if (StringUtility.stringHasValue(defaultValue)) {
+            defaultVal = "默认值: " + defaultValue.trim().replaceAll("\r|\n", "") + ", ";
+        }
+        field.addJavaDocLine(" * " + defaultVal + "必填：" + cannotNull);
         field.addJavaDocLine(" */");
         if (StringUtility.isTrue(useSwagger2Flag)) {
-            String sa = "@ApiModelProperty(value = \"" + remarks + "\", required = " + notNull + ")";
+            String sa = "@ApiModelProperty(value = \"" + remarks + "\", required = " + cannotNull + ")";
             field.addAnnotation(sa);
         }
         return true;
