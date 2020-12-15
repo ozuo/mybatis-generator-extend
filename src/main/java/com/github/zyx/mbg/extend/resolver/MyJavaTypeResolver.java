@@ -107,7 +107,12 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
         forceBigDecimals = StringUtility.isTrue(properties.getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
     }
 
-
+    /**
+     * 指定java类型
+     *
+     * @param introspectedColumn
+     * @return
+     */
     @Override
     public FullyQualifiedJavaType calculateJavaType(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType answer;
@@ -116,26 +121,31 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
         if (jdbcTypeInformation == null) {
             switch (introspectedColumn.getJdbcType()) {
                 case Types.DECIMAL:
-                    if (introspectedColumn.getScale() > 0) {//如果包含小数点则转换成BigDecimal
+                    //如果包含小数点且长度超过10则转换成BigDecimal
+                    if (introspectedColumn.getLength() > 10 && introspectedColumn.getScale() > 0 || forceBigDecimals) {
                         answer = new FullyQualifiedJavaType(BigDecimal.class.getName());
                     } else {
-                        answer = new FullyQualifiedJavaType(Long.class.getName());
+                        if (introspectedColumn.getScale() > 0) {
+                            answer = new FullyQualifiedJavaType(Double.class.getName());
+                        } else if (introspectedColumn.getLength() > 10) {
+                            answer = new FullyQualifiedJavaType(Long.class.getName());
+                        } else if (introspectedColumn.getLength() > 0) {
+                            answer = new FullyQualifiedJavaType(Integer.class.getName());
+                        } else { // 未指定长度
+                            answer = new FullyQualifiedJavaType(Long.class.getName());
+                        }
                     }
                     break;
                 case Types.NUMERIC:
-                    if (introspectedColumn.getScale() > 0) {//如果包含小数点则转换成BigDecimal
+                    if (introspectedColumn.getScale() > 0 || forceBigDecimals) {//如果包含小数点则转换成BigDecimal
                         answer = new FullyQualifiedJavaType(BigDecimal.class.getName());
                     } else {
-                        if (introspectedColumn.getLength() > 18
-                                || forceBigDecimals) {
-                            answer = new FullyQualifiedJavaType(Integer.class
-                                    .getName());
-                        } else if (introspectedColumn.getLength() > 9) {
+                        if (introspectedColumn.getLength() > 10) {
+                            answer = new FullyQualifiedJavaType(Long.class.getName());
+                        } else if (introspectedColumn.getLength() > 0) {
                             answer = new FullyQualifiedJavaType(Integer.class.getName());
-                        } else if (introspectedColumn.getLength() > 4) {
-                            answer = new FullyQualifiedJavaType(Integer.class.getName());
-                        } else {
-                            answer = new FullyQualifiedJavaType(Integer.class.getName());
+                        } else { // 未指定长度
+                            answer = new FullyQualifiedJavaType(Long.class.getName());
                         }
                     }
                     break;
@@ -151,6 +161,12 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
         return answer;
     }
 
+    /**
+     * 指定jdbc类型
+     *
+     * @param introspectedColumn
+     * @return
+     */
     @Override
     public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
         String answer;

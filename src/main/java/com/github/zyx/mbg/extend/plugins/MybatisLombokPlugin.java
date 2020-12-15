@@ -196,6 +196,7 @@ public class MybatisLombokPlugin extends PluginAdapter {
         System.out.println("mapper.xml add baseColumnsSql and aliasColumnsSql...");
         List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
         XmlElement parentElement = document.getRootElement();
+
         // 添加基础字段sql语句
         XmlElement baseColumnsSql = new XmlElement("sql");
         baseColumnsSql.addAttribute(new Attribute("id", "BaseColumns")); // AliasColumns
