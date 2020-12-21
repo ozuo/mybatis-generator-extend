@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.zoxzo</groupId>
     <artifactId>mybatis-generator-extend</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <name>mybatis-generator-extend</name>
     <description>mybatis generator plugin extend</description>
 
@@ -89,7 +89,7 @@
                     <!-- github远程仓库名称 -->
                     <repositoryName>mvn-repo</repositoryName>
                     <!-- github的用户名，注意不是登录的用户名，此项需要登录后，进入https://github.com/settings/profile页面配置Name属性 -->
-                    <repositoryOwner>zuoyx</repositoryOwner>
+                    <repositoryOwner>zoxzo</repositoryOwner>
                 </configuration>
                 <executions>
                     <execution>

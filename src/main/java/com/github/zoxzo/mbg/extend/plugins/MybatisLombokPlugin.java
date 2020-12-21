@@ -1,4 +1,4 @@
-package com.github.zyx.mbg.extend.plugins;
+package com.github.zoxzo.mbg.extend.plugins;
 
 
 import org.mybatis.generator.api.IntrospectedColumn;
