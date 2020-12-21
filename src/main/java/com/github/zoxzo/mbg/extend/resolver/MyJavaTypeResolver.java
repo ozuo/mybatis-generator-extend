@@ -110,8 +110,8 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
     /**
      * 指定java类型
      *
-     * @param introspectedColumn
-     * @return
+     * @param introspectedColumn 表列数据
+     * @return javaType
      */
     @Override
     public FullyQualifiedJavaType calculateJavaType(IntrospectedColumn introspectedColumn) {
@@ -164,8 +164,8 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
     /**
      * 指定jdbc类型
      *
-     * @param introspectedColumn
-     * @return
+     * @param introspectedColumn 列数据
+     * @return String
      */
     @Override
     public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {

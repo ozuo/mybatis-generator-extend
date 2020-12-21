@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.zoxzo</groupId>
     <artifactId>mybatis-generator-extend</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>mybatis-generator-extend</name>
     <description>mybatis generator plugin extend</description>
 
@@ -25,6 +25,30 @@
         <github.global.server>github</github.global.server>
     </properties>
 
+    <!-- 部署中央仓库会校验 -->
+    <url>https://github.com/zoxzo/mybatis-generator-extend</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://choosealicense.com/licenses/mit/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <tag>main</tag>
+        <url>https://github.com/zoxzo/mybatis-generator-extend.git</url>
+        <connection>https://github.com/zoxzo/mybatis-generator-extend.git</connection>
+        <developerConnection>https://github.com/zoxzo/mybatis-generator-extend.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <name>zoxzo</name>
+            <email>zuoyixiao@qq.com</email>
+            <url>https://github.com/zoxzo/mybatis-generator-extend</url>
+        </developer>
+    </developers>
+    <!-- 部署中央仓库会校验 -->
+
 
     <build>
         <plugins>
@@ -38,6 +62,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <fork>true</fork>
+                    <verbose>true</verbose>
+                    <encoding>UTF-8</encoding>
+                    <showWarnings>false</showWarnings>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -53,53 +85,102 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- 发布到github仓库 -->
+            <!-- Javadoc 部署中央仓库会校验 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-                <configuration>
-                    <!-- 配置本地打包后的本地仓库存储地址，后续上传jar包会从此仓库中去取 -->
-                    <altDeploymentRepository>
-                        internal.repo::default::file://${project.build.directory}/maven-repository
-                    </altDeploymentRepository>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.8.2</version>
-            </plugin>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <message>Maven artifacts for ${project.artifactId}-${project.version}</message>
-                    <noJekyll>true</noJekyll>
-                    <!-- 指定从哪里去取打好的包，并上传至github -->
-                    <outputDirectory>${project.build.directory}/maven-repository</outputDirectory>
-                    <!-- 指定要上传的分支, refs/heads 这个不变，后面的分支名可选 -->
-                    <branch>refs/heads/main</branch>
-                    <!-- 包含outputDirectory标签内填的文件夹中的所有内容 -->
-                    <includes>
-                        <include>**/*</include>
-                    </includes>
-                    <!-- github远程仓库名称 -->
-                    <repositoryName>mvn-repo</repositoryName>
-                    <!-- github的用户名，注意不是登录的用户名，此项需要登录后，进入https://github.com/settings/profile页面配置Name属性 -->
-                    <repositoryOwner>zoxzo</repositoryOwner>
-                </configuration>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
+                        <phase>package</phase>
                         <goals>
-                            <goal>site</goal>
+                            <goal>jar</goal>
                         </goals>
-                        <phase>deploy</phase>
                     </execution>
                 </executions>
             </plugin>
+            <!-- GPG 文件加密 部署中央仓库会校验 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-release-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+
+
+            <!-- 发布到github仓库 -->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-deploy-plugin</artifactId>-->
+            <!--                <version>2.8.2</version>-->
+            <!--                <configuration>-->
+            <!--                    &lt;!&ndash; 配置本地打包后的本地仓库存储地址，后续上传jar包会从此仓库中去取 &ndash;&gt;-->
+            <!--                    <altDeploymentRepository>-->
+            <!--                        internal.repo::default::file://${project.build.directory}/maven-repository-->
+            <!--                    </altDeploymentRepository>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-site-plugin</artifactId>-->
+            <!--                <version>3.8.2</version>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>com.github.github</groupId>-->
+            <!--                <artifactId>site-maven-plugin</artifactId>-->
+            <!--                <version>0.12</version>-->
+            <!--                <configuration>-->
+            <!--                    <message>Maven artifacts for ${project.artifactId}-${project.version}</message>-->
+            <!--                    <noJekyll>true</noJekyll>-->
+            <!--                    &lt;!&ndash; 指定从哪里去取打好的包，并上传至github &ndash;&gt;-->
+            <!--                    <outputDirectory>${project.build.directory}/maven-repository</outputDirectory>-->
+            <!--                    &lt;!&ndash; 指定要上传的分支, refs/heads 这个不变，后面的分支名可选 &ndash;&gt;-->
+            <!--                    <branch>refs/heads/main</branch>-->
+            <!--                    &lt;!&ndash; 包含outputDirectory标签内填的文件夹中的所有内容 &ndash;&gt;-->
+            <!--                    <includes>-->
+            <!--                        <include>**/*</include>-->
+            <!--                    </includes>-->
+            <!--                    &lt;!&ndash; github远程仓库名称 &ndash;&gt;-->
+            <!--                    <repositoryName>mvn-repo</repositoryName>-->
+            <!--                    &lt;!&ndash; github的用户名，注意不是登录的用户名，此项需要登录后，进入https://github.com/settings/profile页面配置Name属性 &ndash;&gt;-->
+            <!--                    <repositoryOwner>zoxzo</repositoryOwner>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <goals>-->
+            <!--                            <goal>site</goal>-->
+            <!--                        </goals>-->
+            <!--                        <phase>deploy</phase>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
+
+    <distributionManagement>
+        <!-- 部署中央仓库 -->
+        <snapshotRepository>
+            <id>sonatypeoss</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatypeoss</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 </project>

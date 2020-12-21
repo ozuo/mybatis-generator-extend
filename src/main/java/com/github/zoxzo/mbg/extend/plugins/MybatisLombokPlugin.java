@@ -34,8 +34,8 @@ public class MybatisLombokPlugin extends PluginAdapter {
     /**
      * 验证参数是否有效
      *
-     * @param list
-     * @return
+     * @param list 参数列表
+     * @return boolean
      */
     @Override
     public boolean validate(List<String> list) {
@@ -52,9 +52,9 @@ public class MybatisLombokPlugin extends PluginAdapter {
      * 增加@Data注解
      * 增加类注释
      *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
+     * @param topLevelClass     类
+     * @param introspectedTable 表数据
+     * @return boolean
      */
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
@@ -104,12 +104,12 @@ public class MybatisLombokPlugin extends PluginAdapter {
     /**
      * 实体类 entity.java 字段注释
      *
-     * @param field
-     * @param topLevelClass
-     * @param introspectedColumn
-     * @param introspectedTable
-     * @param modelClassType
-     * @return
+     * @param field              属性字段
+     * @param topLevelClass      类
+     * @param introspectedColumn 表列数据
+     * @param introspectedTable  表数据
+     * @param modelClassType     类型
+     * @return boolean
      */
     @Override
     public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
@@ -145,10 +145,10 @@ public class MybatisLombokPlugin extends PluginAdapter {
     /**
      * mapper.java mapper接口
      *
-     * @param interfaze
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
+     * @param interfaze         mapper接口类
+     * @param topLevelClass     实体类
+     * @param introspectedTable 表数据
+     * @return boolean
      */
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
@@ -180,16 +180,17 @@ public class MybatisLombokPlugin extends PluginAdapter {
     /**
      * 自定义mapper.xml内容
      * 添加字段sql语句，效果例：
-     * * <sql id="BaseColumns">
+     * <p>
+     * * &lt;sql id="BaseColumns"&gt;
      * *     id, name, create_time, update_time
-     * * </sql>
-     * * <sql id="AliasColumns">
+     * * &lt;/sql&gt;
+     * * &lt;sql id="AliasColumns"&gt;
      * *     t.id, t.name, t.create_time, t.update_time
-     * * </sql>
+     * * &lt;/sql&gt;
      *
-     * @param document
-     * @param introspectedTable
-     * @return
+     * @param document          xml文档对象
+     * @param introspectedTable 表数据
+     * @return boolean
      */
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {

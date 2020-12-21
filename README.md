@@ -1,5 +1,5 @@
 # mbg-plugins
-### mybatis generator plugins extend, such as lombok, swagger2, ...
+### mybatis generator plugins extend, such as lombok, swagger2, tk.mybatis, and java-type-resolver ...
 
 
 # 自定义Mybatis Generator插件步骤
@@ -7,12 +7,12 @@
     
     2. idea->Build->Recompile 得到项目 target/classes/org/mybatis/generator/plugins/MybatisLombokPlugin.class
     
-    3. 进入/Users/wanda/.m2/repository/org/mybatis/generator/mybatis-generator-core/1.4.0/
+    3. 进入.m2/repository/org/mybatis/generator/mybatis-generator-core/1.4.0/
     
     4. 解压mybatis-generator-core-1.4.0.jar，然后将MybatisLombokPlugin.class放到org/mybatis/generator/plugins目录下
     
     5. 还原mybatis-generator-core-1.4.0.jar，执行命令：
-        cd /Users/wanda/.m2/repository/org/mybatis/generator/mybatis-generator-core/1.4.0/mybatis-generator-core-1.4.0
+        cd .m2/repository/org/mybatis/generator/mybatis-generator-core/1.4.0/mybatis-generator-core-1.4.0
         jar cvfM0 mybatis-generator-core-1.4.0.jar *
     
     6. 得到新的mybatis-generator-core-1.4.0.jar，放到.m2/repository/org/mybatis/generator/mybatis-generator-core/1.4.0/ 目录下，记得删除会覆盖原来的jar包
@@ -83,12 +83,12 @@
     
     2. mybatis_generator.properties
     ```
-    mybatis.generator.datasource.url=jdbc:oracle:thin:@10.161.17.181:1521:cardb
+    mybatis.generator.datasource.url=jdbc:oracle:thin:@10.xxx.17.xxx:1521:cardb
     mybatis.generator.datasource.username=wise
     mybatis.generator.datasource.password=wisekyh
     mybatis.generator.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
     mybatis.mapper-locations = classpath:/mappers/*.xml
-    mybatis.type-aliases-package = com.wandaloans.common.mapper
+    mybatis.type-aliases-package = com.demo.common.mapper
     classpath=/Users/xxxx/.m2/repository/com/oracle/ojdbc/ojdbc8/19.3.0.0/ojdbc8-19.3.0.0.jar
     ```
     
@@ -150,7 +150,7 @@
                 targetPackage     指定生成的model生成所在的包名
                 targetProject     指定在该项目下所在的路径
             -->
-            <javaModelGenerator targetPackage="com.wandaloans.common.model"
+            <javaModelGenerator targetPackage="com.demo.common.model"
                                 targetProject="src/main/java">
                 <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
                 <property name="enableSubPackages" value="false"/>
@@ -170,13 +170,13 @@
                     type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                     type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
             -->
-            <javaClientGenerator targetPackage="com.wandaloans.common.mapper" targetProject="src/main/java"
+            <javaClientGenerator targetPackage="com.demo.common.mapper" targetProject="src/main/java"
                                  type="XMLMAPPER">
                 <property name="enableSubPackages" value="false"/>
             </javaClientGenerator>
             
             <!-- 需要生成的表 -->
-            <table schema='WISE' tableName='ts_installment_union_ext' domainObjectName='TsInstallmentUnionExt'
+            <table schema='WISE' tableName='test_mybatis_table' domainObjectName='TestMybatisTable'
                    enableCountByExample='false' enableUpdateByExample='false' enableDeleteByExample='false'
                    enableSelectByExample='false' selectByExampleQueryId='false'>
             </table>
@@ -185,6 +185,9 @@
     </generatorConfiguration>
     ```
     
-    4. mvn clean site deploy
+    4. mvn clean deploy
+    使用mvn clean deploy命令构建时，可能会报gpg: signing failed: Inappropriate ioctl for device，是因为无法弹出Passphrase页面，需要在系统环境变量中增加 export GPG_TTY=$(tty)
     
-    
+    5. 部署中央仓库步骤 https://issues.sonatype.org/ https://oss.sonatype.org/  https://search.maven.org/  
+    http://blog.novelsee.com/archives/22509
+    https://www.imooc.com/article/285852
