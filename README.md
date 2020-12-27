@@ -23,7 +23,7 @@
 ## 以上，如果嫌麻烦可以用已打包好的
     ```
     <dependency>
-        <groupId>com.github.zoxzo</groupId>
+        <groupId>com.github.ozuo</groupId>
         <artifactId>mybatis-generator-extend</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
@@ -39,7 +39,7 @@
             <version>1.3.7</version>
         </dependency>
         <dependency>
-            <groupId>com.github.zoxzo</groupId>
+            <groupId>com.github.ozuo</groupId>
             <artifactId>mybatis-generator-extend</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -71,7 +71,7 @@
                         <version>4.1.5</version>
                     </dependency>
                     <dependency>
-                        <groupId>com.github.zoxzo</groupId>
+                        <groupId>com.github.ozuo</groupId>
                         <artifactId>mybatis-generator-extend</artifactId>
                         <version>1.0-SNAPSHOT</version>
                     </dependency>
@@ -120,7 +120,7 @@
                 <property name="caseSensitive" value="true"/>
             </plugin>
             <!-- 自定义lombok插件 java实体类会增加lombok注解 -->
-            <plugin type="com.github.zoxzo.mbg.extend.plugins.MybatisLombokPlugin">
+            <plugin type="MybatisLombokPlugin">
                 <property name="useSwagger2Flag" value="false"/>
             </plugin>
             <!-- optional，旨在创建class时，对注释进行控制 -->
@@ -142,7 +142,7 @@
             </jdbcConnection>
     
             <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
-            <javaTypeResolver type="com.github.zoxzo.mbg.extend.resolver.MyJavaTypeResolver">
+            <javaTypeResolver type="com.github.ozuo.mbg.extend.resolver.MyJavaTypeResolver">
                 <property name="forceBigDecimals" value="false"></property>
             </javaTypeResolver>
     

@@ -1,4 +1,4 @@
-package com.github.zoxzo.mbg.extend.resolver;
+package com.github.ozuo.mbg.extend.resolver;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.JavaTypeResolver;

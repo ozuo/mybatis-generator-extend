@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.zoxzo</groupId>
+    <groupId>com.github.ozuo</groupId>
     <artifactId>mybatis-generator-extend</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>mybatis-generator-extend</name>
     <description>mybatis generator plugin extend</description>
 
@@ -26,7 +26,7 @@
     </properties>
 
     <!-- 部署中央仓库会校验 -->
-    <url>https://github.com/zoxzo/mybatis-generator-extend</url>
+    <url>https://github.com/ozuo/mybatis-generator-extend</url>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -36,15 +36,15 @@
     </licenses>
     <scm>
         <tag>main</tag>
-        <url>https://github.com/zoxzo/mybatis-generator-extend.git</url>
-        <connection>https://github.com/zoxzo/mybatis-generator-extend.git</connection>
-        <developerConnection>https://github.com/zoxzo/mybatis-generator-extend.git</developerConnection>
+        <url>https://github.com/ozuo/mybatis-generator-extend.git</url>
+        <connection>https://github.com/ozuo/mybatis-generator-extend.git</connection>
+        <developerConnection>https://github.com/ozuo/mybatis-generator-extend.git</developerConnection>
     </scm>
     <developers>
         <developer>
-            <name>zoxzo</name>
+            <name>ozuo</name>
             <email>zuoyixiao@qq.com</email>
-            <url>https://github.com/zoxzo/mybatis-generator-extend</url>
+            <url>https://github.com/ozuo/mybatis-generator-extend</url>
         </developer>
     </developers>
     <!-- 部署中央仓库会校验 -->
@@ -85,6 +85,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <!-- Javadoc 部署中央仓库会校验 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -156,7 +157,7 @@
             <!--                    &lt;!&ndash; github远程仓库名称 &ndash;&gt;-->
             <!--                    <repositoryName>mvn-repo</repositoryName>-->
             <!--                    &lt;!&ndash; github的用户名，注意不是登录的用户名，此项需要登录后，进入https://github.com/settings/profile页面配置Name属性 &ndash;&gt;-->
-            <!--                    <repositoryOwner>zoxzo</repositoryOwner>-->
+            <!--                    <repositoryOwner>ozuo</repositoryOwner>-->
             <!--                </configuration>-->
             <!--                <executions>-->
             <!--                    <execution>-->
