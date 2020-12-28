@@ -194,7 +194,7 @@ public class MybatisLombokPlugin extends PluginAdapter {
      */
     @Override
     public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
-        System.out.println("mapper.xml add baseColumnsSql and aliasColumnsSql...");
+        System.out.println("add baseColumnsSql and aliasColumnsSql into mapper.xml...");
         List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
         XmlElement parentElement = document.getRootElement();
 

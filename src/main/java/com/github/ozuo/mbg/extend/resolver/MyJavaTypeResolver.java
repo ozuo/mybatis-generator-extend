@@ -148,6 +148,14 @@ public class MyJavaTypeResolver implements JavaTypeResolver {
                             answer = new FullyQualifiedJavaType(Long.class.getName());
                         }
                     }
+
+                    break;
+                case Types.TINYINT:
+                    if (introspectedColumn.getLength() == 1) {
+                        answer = new FullyQualifiedJavaType(Boolean.class.getName());
+                    } else {
+                        answer = new FullyQualifiedJavaType(Integer.class.getName());
+                    }
                     break;
 
                 default:
