@@ -133,7 +133,7 @@ public class MybatisLombokPlugin extends PluginAdapter {
         if (StringUtility.stringHasValue(defaultValue)) {
             defaultVal = "默认值: " + defaultValue.trim().replaceAll("\r|\n", "") + ", ";
         }
-        field.addJavaDocLine(" * " + defaultVal + "必填：" + cannotNull);
+        field.addJavaDocLine(" * " + defaultVal + (cannotNull ? "必填" : "非必填"));
         field.addJavaDocLine(" */");
         if (StringUtility.isTrue(useSwagger2Flag)) {
             String sa = "@ApiModelProperty(value = \"" + remarks + "\", required = " + cannotNull + ")";
